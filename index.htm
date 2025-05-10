@@ -16,10 +16,10 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      font-size: 2em; /* Titolo leggermente più grande */
+      font-size: 2em;
     }
     h1 img {
-      margin-right: 20px;  /* Distanza tra il logo e il titolo */
+      margin-right: 20px;
       width: 80px;
       height: 80px;
     }
@@ -39,7 +39,6 @@
       flex: 1 1 45%;
       display: flex;
       flex-direction: column;
-      justify-content: space-between; /* Assicura che le colonne abbiano la stessa altezza */
     }
     label {
       margin-bottom: 5px;
@@ -53,7 +52,7 @@
       font-size: 1em;
     }
     textarea {
-      height: 120px; /* Altezza fissa per il campo "aggiornamenti" */
+      height: 120px;
     }
     button {
       background-color: #ffa500;
@@ -63,26 +62,34 @@
       border-radius: 8px;
       font-size: 1em;
       cursor: pointer;
+      margin: 5px;
     }
     button:hover {
       background-color: #ff8800;
     }
     iframe {
-      display: none; /* invisibile */
+      display: none;
+    }
+    #messaggio {
+      text-align: center;
+      font-weight: bold;
+      margin-top: 20px;
+      display: none;
     }
   </style>
 </head>
 <body>
   <h1>
-    <img src="logo.jpg" alt="Logo BestEnglish4U"> <!-- Sostituisci con il percorso del logo -->
+    <img src="logo.jpg" alt="Logo BestEnglish4U">
     BestEnglish4U
   </h1>
 
-  <form method="GET"
-        action="https://script.google.com/macros/s/AKfycbxphnsNTrQ_RVb63_PNOxpBZIHCs2qtga3BIuDMySXLUnf2dE0K7VAsRc8QfrnCnNjP/exec"
+  <form id="datiForm"
+        method="GET"
+        action="https://script.google.com/macros/s/AKfycbxCCfN3taMA7_m0jDREtfYB6XJ1p3DRs2TnMj_4SWgCpkonpqymysj7OT1yawlY1NPI/exec"
         target="hidden_iframe"
-      onsubmit="document.getElementById('messaggio').textContent='Dati inviati con successo!'; setTimeout(function() { document.getElementById('messaggio').style.display = 'none'; }, 5000);">
-        
+        onsubmit="mostraMessaggio();">
+
     <div class="row">
       <div class="col">
         <label for="nome">Nome</label>
@@ -133,14 +140,32 @@
         <textarea id="aggiornamenti" name="aggiornamenti" rows="3"></textarea>
       </div>
     </div>
+
     <div style="text-align: center;">
       <button type="submit">Invia</button>
+      <button type="button" onclick="svuotaCampi()">Svuota</button>
     </div>
   </form>
 
   <iframe name="hidden_iframe"></iframe>
 
-  <p id="messaggio" style="text-align:center; font-weight: bold; margin-top: 20px;"></p>
+  <p id="messaggio">Dati inviati!</p>
+
+  <script>
+    function mostraMessaggio() {
+      const msg = document.getElementById('messaggio');
+      msg.textContent = "Dati inviati!";
+      msg.style.display = "block";
+      setTimeout(() => msg.style.display = "none", 5000);
+    }
+
+    function svuotaCampi() {
+      document.getElementById("datiForm").reset();
+      const msg = document.getElementById('messaggio');
+      msg.textContent = "Campi svuotati.";
+      msg.style.display = "block";
+      setTimeout(() => msg.style.display = "none", 3000);
+    }
+  </script>
 </body>
 </html>
-
